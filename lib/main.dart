@@ -103,37 +103,82 @@ class _HomePageState extends State<HomePage> {
             itemCount: feelings.length,
             itemBuilder: (context, index) {
               final feeling = feelings[index];
-              final bgColor = Color(int.parse('0xFF' + feeling.color.substring(1)));
 
-              return GestureDetector(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => FeelingDetailPage(feeling),
+              final gradients = [
+                [Color(0xFFDA4453), Color(0xFF89216B)],
+                [Color(0xFF4CA1AF), Color(0xFFC4E0E5)],
+                [Color(0xFF00B4DB), Color(0xFF0083B0)],
+                [Color(0xFF43C6AC), Color(0xFFF8FFAE)],
+                [Color(0xFF614385), Color(0xFF516395)],
+                [Color(0xFF7F00FF), Color(0xFFE100FF)],
+                [Color(0xFF56CCF2), Color(0xFF2F80ED)],
+              ];
+              final gradientColors = gradients[index % gradients.length];
+
+              return MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => FeelingDetailPage(feeling),
+                    ),
                   ),
-                ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: bgColor,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(feeling.emoji, style: const TextStyle(fontSize: 40)),
-                        const SizedBox(height: 8),
-                        Text(
-                          feeling.name,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 16, color: Colors.white),
-                        )
+                  child: Container(
+                    margin: const EdgeInsets.all(6),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                    constraints: const BoxConstraints(minHeight: 140, maxHeight: 180),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: gradientColors,
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.15),
+                          blurRadius: 12,
+                          spreadRadius: 2,
+                          offset: Offset(4, 6),
+                        ),
                       ],
+                    ),
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          FittedBox(
+                            child: Text(
+                              feeling.emoji,
+                              style: const TextStyle(
+                                fontSize: 48,
+                                shadows: [
+                                  Shadow(blurRadius: 4, color: Colors.black38, offset: Offset(1, 2)),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Flexible(
+                            child: Text(
+                              feeling.name,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               );
-            },
+            }
           );
         },
       ),
