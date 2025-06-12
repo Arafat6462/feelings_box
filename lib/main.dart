@@ -182,28 +182,153 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
 class FeelingDetailPage extends StatelessWidget {
   final Feeling feeling;
-  final Random _random = Random(); 
+  final Random _random = Random();
+
   FeelingDetailPage(this.feeling, {super.key});
 
-  String getRandomItem(List<dynamic> list, [String? key]) {
-    if (list.isEmpty) return 'N/A';
-    final randomIndex = _random.nextInt(list.length);
-    if (key != null && list[randomIndex] is Map && list[randomIndex][key] != null) {
-      return list[randomIndex][key].toString();
-    }
-    return list[randomIndex].toString();
+  Widget getQuranSection(List<dynamic> list) {
+    if (list.isEmpty) return const Text("N/A");
+
+    final item = list[_random.nextInt(list.length)];
+    if (item is! Map) return Text(item.toString());
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.green[50],
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            item['arabic'] ?? '',
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 24,
+              fontFamily: 'Amiri', // or 'Scheherazade' if available
+              height: 2,
+              color: Colors.green,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              item['reference'] ?? '',
+              style: const TextStyle(
+                fontSize: 14,
+                fontStyle: FontStyle.italic,
+                color: Colors.green,
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            item['bangla'] ?? '',
+            textAlign: TextAlign.justify,
+            style: const TextStyle(fontSize: 16),
+          ),
+        ],
+      ),
+    );
   }
 
-  Widget section(String title, String content) => Column(
+  Widget getHadithSection(List<dynamic> list) {
+    if (list.isEmpty) return const Text("N/A");
+
+    final item = list[_random.nextInt(list.length)];
+    if (item is! Map) return Text(item.toString());
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.amber[50],
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            item['text'] ?? '',
+            textAlign: TextAlign.justify,
+            style: const TextStyle(fontSize: 16),
+          ),
+          const SizedBox(height: 8),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              item['reference'] ?? '',
+              style: const TextStyle(
+                fontSize: 14,
+                fontStyle: FontStyle.italic,
+                color: Colors.orange,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget getDuaSection(List<dynamic> list) {
+    if (list.isEmpty) return const Text("N/A");
+
+    final item = list[_random.nextInt(list.length)];
+    if (item is! Map) return Text(item.toString());
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.blue[50],
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            item['arabic'] ?? '',
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 22,
+              fontFamily: 'Amiri',
+              height: 2,
+              color: Colors.blue,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            item['bangla'] ?? '',
+            textAlign: TextAlign.justify,
+            style: const TextStyle(fontSize: 16),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget simpleTextBox(String content, {Color? color}) => Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: color ?? Colors.grey[100],
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Text(
+          content,
+          textAlign: TextAlign.justify,
+          style: const TextStyle(fontSize: 16),
+        ),
+      );
+
+  Widget section(String title, Widget content) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 4),
-          Text(content, style: const TextStyle(fontSize: 16)),
-          const Divider(height: 24),
+          const SizedBox(height: 8),
+          content,
+          const SizedBox(height: 24),
         ],
       );
 
@@ -215,15 +340,20 @@ class FeelingDetailPage extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
-            section("🕋 কুরআন", getRandomItem(feeling.quran, 'bangla')),
-            section("📜 হাদীস", getRandomItem(feeling.hadith, 'text')),
-            section("🤲 দুআ", getRandomItem(feeling.dua, 'bangla')),
-            section("🧠 প্রতিফলন", getRandomItem(feeling.reflections)),
-            section("💬 কোট", getRandomItem(feeling.quotes)),
-            section("📌 উপদেশ", getRandomItem(feeling.advice)),
+            section("🕋 কুরআন", getQuranSection(feeling.quran)),
+            section("📜 হাদীস", getHadithSection(feeling.hadith)),
+            section("🤲 দুআ", getDuaSection(feeling.dua)),
+            section("🧠 প্রতিফলন", simpleTextBox(_getRandom(feeling.reflections))),
+            section("💬 কোট", simpleTextBox(_getRandom(feeling.quotes))),
+            section("📌 উপদেশ", simpleTextBox(_getRandom(feeling.advice))),
           ],
         ),
       ),
     );
+  }
+
+  String _getRandom(List<dynamic> list) {
+    if (list.isEmpty) return 'N/A';
+    return list[_random.nextInt(list.length)].toString();
   }
 }
