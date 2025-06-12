@@ -106,16 +106,31 @@ class _HomePageState extends State<HomePage> {
               final feeling = feelings[index];
 
               // Optional: custom gradient color list
-              final gradients = [
-                [Color(0xFF2C3E50), Color(0xFF4CA1AF)], // ভয় (Fear)
-                [Color(0xFF360033), Color(0xFF0B8793)], // হতাশা (Despair)
-                [Color(0xFF8A0000), Color(0xFFFF416C)], // রাগ (Anger)
-                [Color(0xFF00C6FF), Color(0xFFFFF200)], // আনন্দ (Joy)
-                [Color(0xFF6A82FB), Color(0xFFFC5C7D)], // উদ্বেগ (Anxiety)
-                [Color(0xFFB24592), Color(0xFFF15F79)], // আত্মগ্লানি (Guilt)
-                [Color(0xFF2F4F4F), Color(0xFF667D8C)], // আত্মবিশ্বাসের অভাব (Low confidence)
-                [Color(0xFF11998E), Color(0xFF38EF7D)], // কৃতজ্ঞতা (Gratitude)
-              ];
+             final gradients = [
+            // 🕋 ভয় (Fear)
+            [Color(0xFF141E30), Color(0xFF243B55)], // Midnight navy blue blend
+
+            // 🌫️ হতাশা (Despair)
+            [Color(0xFF232526), Color(0xFF414345)], // Deep charcoal grey to steel
+
+            // 🔥 রাগ (Anger)
+            [Color(0xFF93291E), Color(0xFFED213A)], // Crimson to bright rage red
+
+            // 🌞 আনন্দ (Joy)
+            [Color(0xFFFFB75E), Color(0xFFED8F03)], // Warm golden orange
+
+            // 🌪️ উদ্বেগ (Anxiety)
+            [Color(0xFF355C7D), Color(0xFF6C5B7B)], // Muted indigo to soft purple
+
+            // 🌫️ আত্মগ্লানি (Guilt)
+            [Color(0xFF606C88), Color(0xFF3F4C6B)], // Faded blue-gray with somber tone
+
+            // 😔 আত্মবিশ্বাসের অভাব (Low confidence)
+            [Color(0xFF434343), Color(0xFF000000)], // Fading deep black to grey
+
+            // 🌿 কৃতজ্ঞতা (Gratitude)
+            [Color(0xFF56ab2f), Color(0xFFA8E063)], // Green of growth and peace
+          ];
 
               final gradientColors = gradients[index % gradients.length];
 
