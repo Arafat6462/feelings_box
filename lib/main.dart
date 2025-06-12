@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -169,7 +170,17 @@ class _HomePageState extends State<HomePage> {
 
 class FeelingDetailPage extends StatelessWidget {
   final Feeling feeling;
-  const FeelingDetailPage(this.feeling, {super.key});
+  final Random _random = Random(); 
+  FeelingDetailPage(this.feeling, {super.key});
+
+  String getRandomItem(List<dynamic> list, [String? key]) {
+    if (list.isEmpty) return 'N/A';
+    final randomIndex = _random.nextInt(list.length);
+    if (key != null && list[randomIndex] is Map && list[randomIndex][key] != null) {
+      return list[randomIndex][key].toString();
+    }
+    return list[randomIndex].toString();
+  }
 
   Widget section(String title, String content) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,12 +200,12 @@ class FeelingDetailPage extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
-            section("🕋 কুরআন", feeling.quran.isNotEmpty ? feeling.quran[0]['bangla'] : 'N/A'),
-            section("📜 হাদীস", feeling.hadith.isNotEmpty ? feeling.hadith[0]['text'] : 'N/A'),
-            section("🤲 দুআ", feeling.dua.isNotEmpty ? feeling.dua[0]['bangla'] : 'N/A'),
-            section("🧠 প্রতিফলন", feeling.reflections.isNotEmpty ? feeling.reflections[0] : 'N/A'),
-            section("💬 কোট", feeling.quotes.isNotEmpty ? feeling.quotes[0] : 'N/A'),
-            section("📌 উপদেশ", feeling.advice.isNotEmpty ? feeling.advice[0] : 'N/A'),
+            section("🕋 কুরআন", getRandomItem(feeling.quran, 'bangla')),
+            section("📜 হাদীস", getRandomItem(feeling.hadith, 'text')),
+            section("🤲 দুআ", getRandomItem(feeling.dua, 'bangla')),
+            section("🧠 প্রতিফলন", getRandomItem(feeling.reflections)),
+            section("💬 কোট", getRandomItem(feeling.quotes)),
+            section("📌 উপদেশ", getRandomItem(feeling.advice)),
           ],
         ),
       ),
