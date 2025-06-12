@@ -16,7 +16,7 @@ class FeelingsApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.teal,
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor:Color(0xFFFAF9F6),
         useMaterial3: true,
       ),
       home: const HomePage(),
@@ -104,74 +104,53 @@ class _HomePageState extends State<HomePage> {
             itemBuilder: (context, index) {
               final feeling = feelings[index];
 
+              // Optional: custom gradient color list
               final gradients = [
-                [Color(0xFFDA4453), Color(0xFF89216B)],
-                [Color(0xFF4CA1AF), Color(0xFFC4E0E5)],
-                [Color(0xFF00B4DB), Color(0xFF0083B0)],
-                [Color(0xFF43C6AC), Color(0xFFF8FFAE)],
-                [Color(0xFF614385), Color(0xFF516395)],
-                [Color(0xFF7F00FF), Color(0xFFE100FF)],
                 [Color(0xFF56CCF2), Color(0xFF2F80ED)],
+                [Color(0xFF43C6AC), Color(0xFFF8FFAE)],
+                [Color(0xFFFFA69E), Color(0xFFFF686B)],
+                [Color(0xFF7F00FF), Color(0xFFE100FF)],
+                [Color(0xFF89F7FE), Color(0xFF66A6FF)],
+                [Color(0xFFBBD2C5), Color(0xFF536976)],
+                [Color(0xFFEECDA3), Color(0xFFEF629F)],
               ];
               final gradientColors = gradients[index % gradients.length];
 
-              return MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => FeelingDetailPage(feeling),
+              return GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => FeelingDetailPage(feeling)),
+                ),
+                child: Container(
+                  margin: const EdgeInsets.all(4),
+                  padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 12),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: gradientColors,
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
-                  ),
-                  child: Container(
-                    margin: const EdgeInsets.all(6),
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-                    constraints: const BoxConstraints(minHeight: 140, maxHeight: 180),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: gradientColors,
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 10,
+                        spreadRadius: 2,
+                        offset: Offset(3, 6),
                       ),
-                      borderRadius: BorderRadius.circular(18),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.15),
-                          blurRadius: 12,
-                          spreadRadius: 2,
-                          offset: Offset(4, 6),
-                        ),
-                      ],
-                    ),
-                    child: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          FittedBox(
-                            child: Text(
-                              feeling.emoji,
-                              style: const TextStyle(
-                                fontSize: 48,
-                                shadows: [
-                                  Shadow(blurRadius: 4, color: Colors.black38, offset: Offset(1, 2)),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Flexible(
-                            child: Text(
-                              feeling.name,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Text(
+                      feeling.name,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        letterSpacing: 0,
+                        shadows: [
+                          Shadow(blurRadius: 2, color: Colors.black38),
                         ],
                       ),
                     ),
