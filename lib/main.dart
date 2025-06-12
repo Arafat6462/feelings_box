@@ -106,14 +106,16 @@ class _HomePageState extends State<HomePage> {
 
               // Optional: custom gradient color list
               final gradients = [
-                [Color(0xFF56CCF2), Color(0xFF2F80ED)],
-                [Color(0xFF43C6AC), Color(0xFFF8FFAE)],
-                [Color(0xFFFFA69E), Color(0xFFFF686B)],
-                [Color(0xFF7F00FF), Color(0xFFE100FF)],
-                [Color(0xFF89F7FE), Color(0xFF66A6FF)],
-                [Color(0xFFBBD2C5), Color(0xFF536976)],
-                [Color(0xFFEECDA3), Color(0xFFEF629F)],
+                [Color(0xFF2C3E50), Color(0xFF4CA1AF)], // ভয় (Fear)
+                [Color(0xFF360033), Color(0xFF0B8793)], // হতাশা (Despair)
+                [Color(0xFF8A0000), Color(0xFFFF416C)], // রাগ (Anger)
+                [Color(0xFF00C6FF), Color(0xFFFFF200)], // আনন্দ (Joy)
+                [Color(0xFF6A82FB), Color(0xFFFC5C7D)], // উদ্বেগ (Anxiety)
+                [Color(0xFFB24592), Color(0xFFF15F79)], // আত্মগ্লানি (Guilt)
+                [Color(0xFF2F4F4F), Color(0xFF667D8C)], // আত্মবিশ্বাসের অভাব (Low confidence)
+                [Color(0xFF11998E), Color(0xFF38EF7D)], // কৃতজ্ঞতা (Gratitude)
               ];
+
               final gradientColors = gradients[index % gradients.length];
 
               return GestureDetector(
